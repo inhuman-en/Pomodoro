@@ -6,7 +6,7 @@ angular.module("pomodoro", []).config(function () {
 
     console.info("app init");
 });
-/**
+;/**
  * Created by Inhuman on 31.10.2015.
  */
 angular.module("pomodoro").controller("TimerController", ["$scope", function ($scope) {

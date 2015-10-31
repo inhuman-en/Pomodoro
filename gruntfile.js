@@ -59,7 +59,7 @@ module.exports = function(grunt) {
                     collapseWhitespace: true
                 },
                 files: {
-                    '<%= dest.root %>/index.html': 'index.html'
+                    '<%= dest.root %>/index.html': 'src/index.html'
                 }
             }
         },
