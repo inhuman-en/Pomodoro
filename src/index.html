@@ -5,20 +5,27 @@
     <title>Pomodoro Timer</title>
     <link rel="stylesheet" href="css/main.css"/>
     <script type="text/javascript" src="../lib/angular.js"></script>
+    <script type="text/javascript" src="../lib/ngStorage.js"></script>
+    <script type="text/javascript" src="../lib/highcharts-standalone-framework.js"></script>
     <script type="text/javascript" src="../lib/highcharts.js"></script>
+    <script type="text/javascript" src="../lib/ngHighcarts.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/controllers/Timer.js"></script>
 </head>
 <body ng-app="pomodoro">
 <div class="wrap">
     <div class="timer-container" ng-controller="TimerController">
-        <div class="timer-clock">{{value}}</div>
+        <div class="timer-clock">{{formattedValue}}</div>
         <div class="timer-controls">
-            <input type="button" value="Start">
-            <input type="button" value="Stop">
-            <input type="button" value="Clear">
+            <input type="button" value="{{isRunning ? 'Stop' : 'Start'}}" ng-click="toggleTimer()">
+            <input type="button" value="Clear" ng-click="clearTimer()">
+            <input type="button" value="History" ng-click="showChart()">
+        </div>
+        <div class="chart-container" ng-show="chartVisible">
+            <highchart config="chartConfig" ></highchart>
         </div>
     </div>
+
 </div>
 </body>
 </html>

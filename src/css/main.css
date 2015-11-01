@@ -11,3 +11,11 @@ body {
     text-align: center;
 }
 
+.timer-clock {
+    font-size: 4em;
+}
+
+.chart-container {
+    height: 400px;
+}
+
