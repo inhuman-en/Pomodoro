@@ -1,66 +1,75 @@
 /**
  * Created by Inhuman on 31.10.2015.
  */
-angular.module("pomodoro",[
-        "ngStorage",
-        "highcharts-ng"
-
-    ]).controller("TimerController",
+angular.module("pomodoro").controller("TimerController",
     [
         "$scope",
         "$interval",
         "$filter",
-        "$localStorage",
-        "highchartsNG",
+        "storage",
 
-        function ($scope, $interval, $filter, $localStorage, $highcharts) {
+        function ($scope, $interval, $filter, storage) {
             "use strict";
-            $scope.$storage = $localStorage;
-            $scope.timerValue = new Date(0);
-            $scope.formattedValue = "00:00:00";
-            $scope.isRunning = false;
-            $scope.chartVisible = false;
-
-            $scope.chartConfig = {
-                options: {
-                    chart: {
-                        type: 'line'
-                    },
-                        xAxis: {
-                            type: "datetime"
-                        }
-
-                },
-                series: [{
-                    data: [],
-                    color: "green"
-                }],
-                title: {
-                    text: 'Timer History'
-                }
-            };
-
-            $scope.$storage.timerHistory  = $scope.$storage.timerHistory || [];
 
             //NOTE: milliseconds
-            var increment = 1000,
+            var INITIAL_VALUE = 60*5000,
+                INCREMENT = 1000,
                 lapStart = null,
                 lapEnd = null,
                 timer;
 
+            $scope.timerValue = new Date(INITIAL_VALUE);
+            $scope.formattedValue = timeFormatter($scope.timerValue);
+            $scope.isRunning = false;
+
+            //TODO: I don't like this use of Promise
+            storage.then(function (module) {
+                $scope.storage = module;
+            });
+
+            $scope.toggleTimer = function () {
+
+                if ($scope.isRunning) {
+                    stopTimer();
+                } else {
+                    startTimer();
+                }
+
+                $scope.isRunning = !$scope.isRunning;
+            };
+
+            $scope.clearTimer = function () {
+                if ($scope.isRunning) {
+                    $scope.toggleTimer();
+                }
+
+                updateTimer(INITIAL_VALUE);
+            };
+
+            function isElapsed() {
+                return $scope.timerValue.getTime() === 0;
+            }
+
             function oneTick() {
-                updateTimer(+$scope.timerValue + increment);
+                updateTimer(+$scope.timerValue - INCREMENT);
+
+                if (isElapsed()) {
+                    console.log("time is up!");
+                    $scope.clearTimer();
+                }
             }
 
             function startTimer () {
-                timer = $interval(oneTick, increment);
+                timer = $interval(oneTick, INCREMENT);
                 lapStart = new Date();
+                console.info("timer started");
             }
 
             function stopTimer () {
                 timer =  $interval.cancel(timer);
                 lapEnd = new Date();
                 saveLap();
+                console.info("timer stopped");
             }
 
             function updateTimer (value) {
@@ -74,49 +83,9 @@ angular.module("pomodoro",[
 
             function saveLap () {
                 console.log("saving..", lapStart.toISOString(), lapEnd.toISOString());
-                $scope.$storage.timerHistory.push({
-                    start: lapStart.toISOString(),
-                    end: lapEnd.toISOString(),
-                    duration: lapEnd - lapStart
-                });
-
-                updateChart();
+                $scope.storage.save(lapStart, lapEnd);
             }
 
-            function updateChart () {
-                $scope.chartConfig.series[0].data = $scope.$storage.timerHistory.map(function (lap) {
-                    return {
-                        x: new Date(lap.start),
-                        y: Math.round(lap.duration / 1000)
-                    };
-                })
-            }
-
-            $scope.toggleTimer = function () {
-
-                if ($scope.isRunning) {
-                    stopTimer();
-                } else {
-                    startTimer();
-                }
-
-                $scope.isRunning = !$scope.isRunning;
-                //console.log("running?", $scope.isRunning);
-            }
-
-            $scope.clearTimer = function () {
-                if ($scope.isRunning) {
-                    $scope.toggleTimer();
-                }
-
-                updateTimer(0);
-            }
-
-            $scope.showChart = function () {
-                $scope.chartVisible = true;
-
-                updateChart();
-            }
         }
     ]
 );

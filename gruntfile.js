@@ -19,13 +19,15 @@ module.exports = function(grunt) {
             css: 'build/css'
         },
 
+        clean: ["<%= dest.root %>"],
+
         concat: {
             options: {
                 separator: ';'
             },
             dist: {
-                //src: ['<%= lib %>**/*.js', '<%= src.js %>**/*.js'],
-                src: ['<%= src.js %>/**/*.js'],
+                src: ['<%= lib %>**/*.js', '<%= src.js %>/**/*.js'],
+                //src: ['<%= src.js %>/**/*.js'],
                 dest: '<%= dest.js %>/<%= pkg.name %>.js'
             }
         },
@@ -52,10 +54,25 @@ module.exports = function(grunt) {
             }
         },
 
+        injector: {
+            options: {
+                ignorePath: "<%= dest.root %>/",
+                addRootSlash: false
+            },
+            local_dependencies: {
+                files: {
+                    '<%= dest.root %>/index.html': [
+                        '<%= dest.js %>/<%= pkg.name %>-<%= pkg.version %>.min.js',
+                        '<%= dest.css %>**/*.css'
+                    ]
+                }
+            }
+        },
+
         htmlmin: {
             dist: {
                 options: {
-                    removeComments: true,
+                    removeComments: false,
                     collapseWhitespace: true
                 },
                 files: {
@@ -91,15 +108,17 @@ module.exports = function(grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-injector');
     grunt.loadNpmTasks('grunt-markdown');
 
     //TODO: add tests
-    grunt.registerTask('build', ['concat', 'uglify', 'cssmin', 'htmlmin']);
+    grunt.registerTask('build', ['clean', 'concat', 'uglify', 'cssmin', 'htmlmin', 'injector']);
     grunt.registerTask('default', ['build']);
 
 };
