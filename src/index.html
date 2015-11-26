@@ -2,8 +2,11 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pomodoro Timer</title>
     <!-- injector:css -->
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <link rel="stylesheet" href="css/skeleton.css"/>
     <link rel="stylesheet" href="css/main.css"/>
     <!-- endinjector -->
     <!-- injector:js -->
@@ -18,12 +21,13 @@
     <!-- endinjector -->
 </head>
 <body ng-app="pomodoro" ng-strict-di>
-<div class="wrap">
-    <div class="timer-container" ng-controller="TimerController">
-        <div class="timer-clock">{{formattedValue}}</div>
+<div class="container">
+    <div class="row timer-container" ng-controller="TimerController">
+        <!-- TODO: contenteditable and mask for HH:MM:SS-->
+        <h1 class="timer-clock {{timerClass}}">{{formattedValue}}</h1>
         <div class="timer-controls">
-            <input type="button" value="{{isRunning ? 'Stop' : 'Start'}}" ng-click="toggleTimer()">
-            <input type="button" value="Clear" ng-click="clearTimer()">
+            <input type="button" class="button-primary start-button" value="{{isRunning ? 'Stop' : 'Start'}}" ng-click="toggleTimer()">
+            <input type="button" class="button-primary clear-button" value="Clear" ng-click="clearTimer()">
         </div>
     </div>
 

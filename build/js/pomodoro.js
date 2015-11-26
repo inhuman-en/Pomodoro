@@ -29815,15 +29815,16 @@ angular.module("pomodoro").controller("ChartController",
 angular.module("pomodoro").controller("TimerController",
     [
         "$scope",
+        "$element",
         "$interval",
         "$filter",
         "storage",
 
-        function ($scope, $interval, $filter, storage) {
+        function ($scope, $element, $interval, $filter, storage) {
             "use strict";
 
             //NOTE: milliseconds
-            var INITIAL_VALUE = 60*5000,
+            var INITIAL_VALUE = 62*1000,
                 INCREMENT = 1000,
                 lapStart = null,
                 lapEnd = null,
@@ -29863,7 +29864,6 @@ angular.module("pomodoro").controller("TimerController",
 
             function oneTick() {
                 updateTimer(+$scope.timerValue - INCREMENT);
-
                 if (isElapsed()) {
                     console.log("time is up!");
                     $scope.clearTimer();
@@ -29886,15 +29886,22 @@ angular.module("pomodoro").controller("TimerController",
             function updateTimer (value) {
                 $scope.timerValue.setTime(value);
                 $scope.formattedValue = timeFormatter($scope.timerValue);
+                switchColor();
             }
 
             function timeFormatter (date) {
-                return $filter('date')(date, "HH:mm:ss", "utc");
+                return $filter('date')(date, "mm:ss", "utc");
             }
 
             function saveLap () {
                 console.log("saving..", lapStart.toISOString(), lapEnd.toISOString());
                 $scope.storage.save(lapStart, lapEnd);
+            }
+
+            function switchColor () {
+                 $scope.timerClass = $scope.timerValue.getTime() <= 60*INCREMENT ?
+                     "red-timer" :
+                     "";
             }
 
         }
