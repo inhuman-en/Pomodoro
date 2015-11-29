@@ -1,54 +1,59 @@
+body {
+    background-color: #474747;
+}
+
 .timer-container {
     text-align: center;
 }
 
 .timer-clock {
     margin-top: 100px;
-    font-size: 15rem;
+    font-size: 12rem;
     font-weight: 500;
+    color: #fff;
 }
 
 .timer-clock.red-timer {
     color: #c96250;
 }
 
-.timer-controls input[type="button"] {
-    line-height: 25px;
-    height: 25px;
-    padding: 0 12px;
-    margin: 0 10px;
-    width: 68px;
-}
+/*.timer-controls input[type="button"] {*/
+    /*line-height: 25px;*/
+    /*height: 25px;*/
+    /*padding: 0 12px;*/
+    /*margin: 0 10px;*/
+    /*width: 68px;*/
+/*}*/
 
-.timer-controls input[type="button"].start-button {
-    background-color: #5fb769;
-    border-color: #5fb769;
-}
+/*.timer-controls input[type="button"].start-button {*/
+    /*background-color: #5fb769;*/
+    /*border-color: #5fb769;*/
+/*}*/
 
-.timer-controls input[type="button"].clear-button {
-    background-color: #c96250;
-    border-color: #c96250;
-}
+/*.timer-controls input[type="button"].clear-button {*/
+    /*background-color: #c96250;*/
+    /*border-color: #c96250;*/
+/*}*/
 
-.timer-controls input[type="button"].start-button:focus {
-    background-color: #458e4e;
-    border-color: #458e4e;
-}
+/*.timer-controls input[type="button"].start-button:focus {*/
+    /*background-color: #458e4e;*/
+    /*border-color: #458e4e;*/
+/*}*/
 
-.timer-controls input[type="button"].clear-button:focus {
-    background-color: #a8443a;
-    border-color: #a8443a;
-}
+/*.timer-controls input[type="button"].clear-button:focus {*/
+    /*background-color: #a8443a;*/
+    /*border-color: #a8443a;*/
+/*}*/
 
-.timer-controls input[type="button"].start-button:hover {
-    background-color: #458e4e;
-    border-color: #458e4e;
-}
+/*.timer-controls input[type="button"].start-button:hover {*/
+    /*background-color: #458e4e;*/
+    /*border-color: #458e4e;*/
+/*}*/
 
-.timer-controls input[type="button"].clear-button:hover {
-    background-color: #a8443a;
-    border-color: #a8443a;
-}
+/*.timer-controls input[type="button"].clear-button:hover {*/
+    /*background-color: #a8443a;*/
+    /*border-color: #a8443a;*/
+/*}*/
 
 .chart-container {
     height: 400px;

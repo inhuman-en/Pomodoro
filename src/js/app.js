@@ -3,6 +3,7 @@
  */
 angular.module("pomodoro", [
     "highcharts-ng",
+    //"ngMask",
 ]).config(function () {
     "use strict";
 

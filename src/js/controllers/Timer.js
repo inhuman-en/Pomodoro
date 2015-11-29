@@ -8,13 +8,14 @@ angular.module("pomodoro").controller("TimerController",
         "$interval",
         "$filter",
         "storage",
+        "constants",
 
-        function ($scope, $element, $interval, $filter, storage) {
+        function ($scope, $element, $interval, $filter, storage, constants) {
             "use strict";
+            console.log(constants);
 
-            //NOTE: milliseconds
-            var INITIAL_VALUE = 62*1000,
-                INCREMENT = 1000,
+            var INCREMENT =  constants.TIMER_INCREMENT * constants.MSEC_RATIO,
+                INITIAL_VALUE = constants.TIMER_INITIAL_VALUE * constants.MSEC_RATIO,
                 lapStart = null,
                 lapEnd = null,
                 timer;
