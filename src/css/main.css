@@ -2,6 +2,10 @@ body {
     background-color: #474747;
 }
 
+.hidden {
+    visibility: hidden;
+}
+
 .timer-container {
     text-align: center;
 }

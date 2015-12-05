@@ -13,30 +13,21 @@
     <script type="text/javascript" src="../lib/angular.js"></script>
     <script type="text/javascript" src="../lib/highcharts-standalone-framework.js"></script>
     <script type="text/javascript" src="../lib/highcharts.js"></script>
+    <script type="text/javascript" src="../lib/dark-unica.js"></script>
     <script type="text/javascript" src="../lib/ngHighcarts.js"></script>
     <script type="text/javascript" src="../lib/ngMask.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/constants.js"></script>
-    <script type="text/javascript" src="js/controllers/Timer.js"></script>
     <script type="text/javascript" src="js/controllers/Chart.js"></script>
+    <script type="text/javascript" src="js/directives/pomodoro-timer.js"></script>
     <script type="text/javascript" src="js/providers/historyStorage.js"></script>
     <!-- endinjector -->
 </head>
 <body ng-app="pomodoro" ng-strict-di>
-<div class="container">
-    <div class="row timer-container" ng-controller="TimerController">
-        <!-- TODO: contenteditable and mask for HH:MM:SS-->
-        <h1 class="timer-clock {{timerClass}}">{{formattedValue}}</h1>
-        <div class="timer-controls">
-            <input type="button" class="button-primary start-button" value="{{isRunning ? 'Stop' : 'Start'}}" ng-click="toggleTimer()">
-            <input type="button" class="button-primary clear-button" value="Clear" ng-click="clearTimer()">
-        </div>
-    </div>
-
-    <!--<div class="chart-container"  ng-controller="ChartController">-->
-        <!--<input type="button" value="History" ng-click="showChart()">-->
-        <!--<highchart config="chartConfig" ></highchart>-->
-    <!--</div>-->
+<div class="container" ng-controller="ChartController">
+    <pomodoro-timer class="row timer-container" after-save="showChart()"></pomodoro-timer>
+    <highchart config="chartConfig" class="{{chartVisible ? '' : 'hidden'}}"></highchart>
+</div>
 </div>
 </body>
 </html>

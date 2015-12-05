@@ -1,13 +1,17 @@
 /**
  * Created by Inhuman on 25.11.2015.
  */
+//TODO: now this controls more than chart, rename
 angular.module("pomodoro").controller("ChartController",
     [
         "$scope",
-        "highchartsNG",
+        "storage",
 
-        function ($scope) {
+        function ($scope, storage) {
             "use strict";
+
+            //TODO: xAxis in local time
+            //TODO: chart styling
 
             $scope.chartVisible = false;
             $scope.chartConfig = {
@@ -36,7 +40,7 @@ angular.module("pomodoro").controller("ChartController",
             };
 
             function updateChart () {
-                $scope.chartConfig.series[0].data = $scope.$storage.timerHistory.map(function (lap) {
+                $scope.chartConfig.series[0].data = storage.timerHistory.map(function (lap) {
                     return {
                         x: new Date(lap.start),
                         y: Math.round(lap.duration / 1000)
