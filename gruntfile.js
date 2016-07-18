@@ -1,5 +1,3 @@
-//TODO: add lib files to build
-//TODO: injector task to refer single minfied js from index
 module.exports = function(grunt) {
 
     grunt.initConfig({
@@ -86,9 +84,9 @@ module.exports = function(grunt) {
                 files: ['<%= src.js %>**/*.js', '<%= src.css %>**/*.css', '<%= src.root %>*.html'],
                 tasks: [],
                 options: {
-                  livereload: true
+                    livereload: true
                 }
-              }
+            }
         },
 
         markdown: {
@@ -105,6 +103,34 @@ module.exports = function(grunt) {
                     gfm: true
                 }
             }
+        },
+
+        'http-server': {
+            
+            // TODO: production setup
+            dev: {
+                root: "",
+                
+                host: "127.0.0.1",
+                port: 8282,
+
+                showDir: true,
+                autoIndex: true,
+
+                // server default file extension 
+                ext: "html",
+
+                // run in parallel with other tasks 
+                runInBackground: false,
+
+                // specify a logger function. By default the requests are 
+                // sent to stdout. 
+                logFn: function(req, res, error) {},
+
+                // Tell grunt task to open the browser 
+                openBrowser: true
+            }
+
         }
     });
 
@@ -116,9 +142,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-injector');
     grunt.loadNpmTasks('grunt-markdown');
+    grunt.loadNpmTasks('grunt-http-server');
 
     //TODO: add tests
     grunt.registerTask('build', ['clean', 'concat', 'uglify', 'cssmin', 'htmlmin', 'injector']);
     grunt.registerTask('default', ['build']);
+    grunt.registerTask('serve', ['http-server']);
 
 };
