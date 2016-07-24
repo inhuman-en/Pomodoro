@@ -1,6 +1,38 @@
 /**
  * Created by Inhuman on 25.11.2015.
  */
+
+function Ctor (id) {
+            'use strict';
+
+            var STORAGE_ID = id;
+
+            function _getFromLocalStorage () {
+                return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+            }
+
+            function _saveToLocalStorage (value) {
+                localStorage.setItem(STORAGE_ID, JSON.stringify(value));
+            }
+
+            return {
+
+                timerHistory: _getFromLocalStorage(),
+
+                save: function (start, end) {
+
+                    this.timerHistory.push({
+                        start: start.toISOString(),
+                        end: end.toISOString(),
+                        duration: end - start
+                    });
+
+                    _saveToLocalStorage(this.timerHistory);
+                    console.log("saved!");
+                }
+            };
+}
+
 angular.module('pomodoro')
     .factory('storage',
         [
@@ -28,33 +60,18 @@ angular.module('pomodoro')
             return null;
         })
 
-        .factory('localStorage', function () {
-            'use strict';
+        .factory('localStorage', Ctor)
 
-            var STORAGE_ID = "timerHistory";
+        .provider('localStorage', function() {
+            var prefix = "timerHistory",
+                calculatedId = prefix;
 
-            function _getFromLocalStorage () {
-                return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+
+            this.setId = function (id) {
+                calculatedId += id;
             }
 
-            function _saveToLocalStorage (value) {
-                localStorage.setItem(STORAGE_ID, JSON.stringify(value));
+            this.$get = function () {
+                return new Ctor (calculatedId);
             }
-
-            return {
-
-                timerHistory: _getFromLocalStorage(),
-
-                save: function (start, end) {
-
-                    this.timerHistory.push({
-                        start: start.toISOString(),
-                        end: end.toISOString(),
-                        duration: end - start
-                    });
-
-                    _saveToLocalStorage(this.timerHistory);
-                    console.log("saved!");
-                }
-            };
         });

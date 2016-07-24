@@ -2,7 +2,7 @@
  * Created by Inhuman on 25.11.2015.
  */
 //TODO: now this controls more than chart, rename
-angular.module("pomodoro").controller("ChartController",
+angular.module("pomodoro").controller("PomodoroController",
     [
         "$scope",
         "storage",

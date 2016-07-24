@@ -3,9 +3,8 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        lib: 'lib',
-
         src: {
+            libRoot: 'src/lib',
             root: 'src',
             js: 'src/js',
             css: 'src/css'
@@ -24,8 +23,7 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['<%= lib %>**/*.js', '<%= src.js %>/**/*.js'],
-                //src: ['<%= src.js %>/**/*.js'],
+                src: ['<%= src.libRoot %>**/*.js', '<%= src.js %>/**/*.js'],
                 dest: '<%= dest.js %>/<%= pkg.name %>.js'
             }
         },
@@ -109,7 +107,7 @@ module.exports = function(grunt) {
             
             // TODO: production setup
             dev: {
-                root: "",
+                root: "src",
                 
                 host: "127.0.0.1",
                 port: 8282,
