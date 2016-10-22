@@ -1,5 +1,8 @@
 module.exports = function(grunt) {
-
+    // todo:
+    // tests
+    // ngInject
+    // includeSource
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -142,7 +145,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-markdown');
     grunt.loadNpmTasks('grunt-http-server');
 
-    //TODO: add tests
     grunt.registerTask('build', ['clean', 'concat', 'uglify', 'cssmin', 'htmlmin', 'injector']);
     grunt.registerTask('default', ['build']);
     grunt.registerTask('serve', ['http-server']);

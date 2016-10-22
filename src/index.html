@@ -19,20 +19,26 @@
     <script type="text/javascript" src="lib/dark-unica.js"></script>
     <script type="text/javascript" src="lib/ngHighcarts.js"></script>
     <script type="text/javascript" src="lib/ngMask.min.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
-    <script type="text/javascript" src="js/constants.js"></script>
-    <script type="text/javascript" src="js/controllers/Pomodoro.js"></script>
-    <script type="text/javascript" src="js/directives/pomodoro-timer.js"></script>
-    <script type="text/javascript" src="js/providers/historyStorage.js"></script>
-    <!-- endinjector -->
+    <script type="text/javascript" src="js/app/pomodoro/pomodoro.module.js"></script>
+    <script type="text/javascript" src="js/app/services/historyStorage.js"></script>    
+    <script type="text/javascript" src="js/app/pomodoro/pomodoro.config.js"></script>
+    <script type="text/javascript" src="js/app/pomodoro/pomodoro.controller.js"></script>
+    <script type="text/javascript" src="js/app/pomodoro/pomodoro.constants.js"></script>
+    <script type="text/javascript" src="js/app/pomodoro/pomodoro-timer.directive.js"></script>
+    <script type="text/javascript" src="js/app/app.module.js"></script>
+    <script type="text/javascript" src="js/app/app.config.js"></script>
+
+
+
+    <!-- endinjector-->
 </head>
 
-<body ng-app="pomodoro" ng-strict-di>
+<body ng-app="app" ng-strict-di>
 
         <nav>
             <ul>
                 <li>
-                    <a href="timer">Timer</a>
+                    <a href="pomodoro">Timer</a>
                     <a href="#"></a>
                     <a href="#"></a>
                     <a href="#"></a>
