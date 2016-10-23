@@ -3,32 +3,25 @@
 
     angular
         .module('pomodoro')
-        //todo: move to component
-        .directive('pomodoroTimer', PomodoroTimer);
-
-    function PomodoroTimer() {
-        var directive = {
-            restrict: 'E',
-            templateUrl: 'js/app/pomodoro/pomodoro-timer.directive.html',
-            scope: {
-                onStop: '&onStop'
-            },
-            controller: PomodoroTimerController
-        };
-
-        return directive;
-    }
+        .component('pomodoroTimer', {
+                templateUrl: 'js/app/pomodoro/pomodoro-timer.component.html',
+                bindings: {
+                    onStop: '&onStop'
+                },
+                controller: PomodoroTimerController
+            });
 
     PomodoroTimerController.$inject = [
         "$scope",
         "$interval",
         "$filter",
-        "constants",
-        "timerStorage"
+        "constants"
     ];
 
-    function PomodoroTimerController($scope, $interval, $filter, constants, storage) {
-        var INCREMENT = constants.TIMER_INCREMENT * constants.MSEC_RATIO,
+    //todo: get rid of $scope
+    function PomodoroTimerController($scope, $interval, $filter, constants) {
+        var vm = this,
+            INCREMENT = constants.TIMER_INCREMENT * constants.MSEC_RATIO,
             INITIAL_VALUE = constants.TIMER_INITIAL_VALUE * constants.MSEC_RATIO,
             lapStart = null,
             lapEnd = null,
@@ -78,7 +71,7 @@
         function stopTimer() {
             timer = $interval.cancel(timer);
             lapEnd = new Date();
-            saveLap();
+            vm.onStop({lapStart, lapEnd});
             console.info("timer stopped");
         }
 
@@ -90,14 +83,6 @@
 
         function timeFormatter(date) {
             return $filter('date')(date, "mm:ss", "utc");
-        }
-
-        function saveLap() {
-            // todo: timer sholdn't know about storage
-            //(how to pass lapStart, lapEnd to wrapping controller?)
-            console.log("saving..", lapStart.toISOString(), lapEnd.toISOString());
-            storage.save(lapStart, lapEnd);
-            $scope.onStop(lapStart, lapEnd);
         }
 
         function switchColor() {

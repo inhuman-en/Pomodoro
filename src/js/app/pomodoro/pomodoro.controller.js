@@ -39,8 +39,9 @@ console.log(storage);
             updateChart();
         };
 
-        $scope.onTimerStop = function () {
-            // storage.save(lapStart, lapEnd);
+        $scope.onTimerStop = function (lapStart, lapEnd) {
+            console.log(lapStart, lapEnd);
+            storage.save(lapStart, lapEnd);
             $scope.showChart();
         }
 
